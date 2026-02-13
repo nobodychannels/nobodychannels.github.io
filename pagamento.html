@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Inscrição | Protocolo Zero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon: #ccff00;
+            --bg: #050505;
+            --surface: #111;
+            --text: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .checkout-container {
+            max-width: 500px;
+            width: 100%;
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #222;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 10px; text-transform: uppercase; }
+        p { color: #888; margin-bottom: 30px; font-size: 0.95rem; }
+
+        .price-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--neon);
+            margin-bottom: 30px;
+        }
+
+        /* BOTÕES DE PAGAMENTO */
+        .pay-option {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 1px solid #333;
+        }
+
+        /* Estilo para Portugal */
+        .eu-btn { background: #fff; color: #000; }
+        .eu-btn:hover { background: #f0f0f0; transform: translateY(-3px); }
+
+        /* Estilo para Brasil */
+        .br-btn { background: transparent; color: var(--neon); border-color: var(--neon); }
+        .br-btn:hover { background: rgba(204, 255, 0, 0.1); transform: translateY(-3px); }
+
+        .flag { font-size: 1.5rem; }
+
+        .secure-badge {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #555;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+        .back-link:hover { color: var(--neon); }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+        <h1>Quase lá!</h1>
+        <p>Escolhe a tua moeda para ser redirecionado para o checkout seguro da Hotmart.</p>
+
+        <div class="price-display">€67 / R$347</div>
+
+        <a href="COLOCA_AQUI_O_LINK_HOTMART_EURO" class="pay-option eu-btn">
+            <span class="flag">🇵🇹</span> 
+            <span>Pagar em EUROS (MBWay / Cartão)</span>
+        </a>
+
+        <a href="COLOCA_AQUI_O_LINK_HOTMART_REAIS" class="pay-option br-btn">
+            <span class="flag">🇧🇷</span> 
+            <span>Pagar em REAIS (PIX / Boleto)</span>
+        </a>
+
+        <div class="secure-badge">
+            <span>🔒 Pagamento Processado pela Hotmart</span>
+            <span>🛡️ Garantia de 30 Dias</span>
+        </div>
+
+        <a href="index.html" class="back-link">← Voltar para a página anterior</a>
+    </div>
+
+</body>
+</html>
