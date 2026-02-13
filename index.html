@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOLO ZERO | Destrói a Gordura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- CONFIGURAÇÃO VISUAL "DOPE" --- */
+        :root {
+            --neon: #ccff00; /* Volt/Neon Yellow - Muito tendência */
+            --neon-dim: rgba(204, 255, 0, 0.1);
+            --bg: #050505;
+            --surface: #111111;
+            --surface-light: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --danger: #ff3333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* TIPOGRAFIA */
+        h1, h2, h3 { font-weight: 900; text-transform: uppercase; letter-spacing: -1px; line-height: 1.1; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; }
+        p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        
+        .text-neon { color: var(--neon); }
+        .text-white { color: white; }
+        .strike { text-decoration: line-through; opacity: 0.6; }
+
+        /* COMPONENTES */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .btn {
+            display: inline-block;
+            background: var(--neon);
+            color: #000;
+            padding: 18px 45px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+        }
+        .btn:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 0 40px rgba(204, 255, 0, 0.5); 
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--neon);
+            color: var(--neon);
+        }
+
+        /* SECTIONS */
+        section { padding: 80px 0; border-bottom: 1px solid #111; }
+
+        /* HERO */
+        .hero {
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, #1a1a00 0%, var(--bg) 70%);
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, #000 3px);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        /* O INIMIGO (GRID) */
+        .enemy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card {
+            background: var(--surface);
+            padding: 30px;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--neon); transform: translateY(-5px); }
+        .card-icon { font-size: 2rem; margin-bottom: 15px; }
+
+        /* PROVA SOCIAL (Estilo Chat) */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .chat-bubble {
+            background: var(--surface-light);
+            padding: 20px;
+            border-radius: 20px;
+            border-bottom-left-radius: 2px;
+            position: relative;
+            border-left: 3px solid var(--neon);
+        }
+        .chat-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px; color: #666; }
+        .chat-name { color: var(--neon); font-weight: bold; }
+
+        /* O FILTRO (Quem não queremos) */
+        .filter-section { background: #000; }
+        .versus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 768px) { .versus-grid { grid-template-columns: 1fr; } }
+        
+        .list-check li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #ddd; }
+        .list-check li::before { content: '✓'; color: var(--neon); font-weight: bold; }
+        
+        .list-cross li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #999; }
+        .list-cross li::before { content: '✕'; color: var(--danger); font-weight: bold; }
+
+        /* CURRICULUM */
+        .module {
+            background: var(--surface);
+            margin-bottom: 15px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 4px solid #333;
+        }
+        .module:hover { border-right-color: var(--neon); background: var(--surface-light); }
+
+        /* PREÇO */
+        .price-box {
+            background: linear-gradient(145deg, #111, #000);
+            border: 2px solid var(--neon);
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 0 50px rgba(204, 255, 0, 0.1);
+        }
+        .badge {
+            position: absolute;
+            top: -15px; right: -15px;
+            background: var(--neon);
+            color: black;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transform: rotate(3deg);
+        }
+
+        /* FOOTER */
+        footer { padding: 40px 0; text-align: center; border-top: 1px solid #222; font-size: 0.9rem; color: #555; }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <span style="border: 1px solid var(--neon); padding: 5px 15px; color: var(--neon); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">Acesso Restrito</span>
+            <br><br>
+            <h1>Parece Ilegal.<br>Mas é só <span class="text-neon">Biologia.</span></h1>
+            <p style="max-width: 700px; margin: 20px auto;">
+                A indústria do fitness quer-te gordo e dependente. O <strong>Protocolo Zero</strong> é o sistema "unfair advantage" para queimar gordura visceral sem passares fome ou viveres no ginásio.
+            </p>
+            <br>
+            <a href="#oferta" class="btn">Hackear o Meu Metabolismo 🔥</a>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #666;">*Não cliques se procuras "dicas fofinhas". Isto é ciência bruta.</p>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <h2 class="text-center">Eles mentiram-te na cara.</h2>
+            <p>Porque é que 95% das dietas falham? Porque foram desenhadas para falhar. Tu não tens "genética má". Tens a estratégia errada.</p>
+            
+            <div class="enemy-grid">
+                <div class="card">
+                    <div class="card-icon">🥗</div>
+                    <h3 class="text-white">O Mito da Fome</h3>
+                    <p>Comer 1200 calorias destrói a tua tiroide e mete o teu corpo em modo de pânico. Resultado? O peso volta todo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏃</div>
+                    <h3 class="text-white">A Prisão do Cardio</h3>
+                    <p>Horas na passadeira aumentam o cortisol (hormona do stress) que... adivinha? Acumula gordura na barriga.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💊</div>
+                    <h3 class="text-white">O Golpe do Detox</h3>
+                    <p>Chás e pílulas mágicas? A única coisa que fica mais leve é a tua carteira. Nós usamos comida real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--surface);">
+        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px;">
+            <div style="flex: 1; min-width: 300px;">
+                <h2>Não é Dieta.<br>É um <span class="text-neon">Sistema Operativo.</span></h2>
+                <p>Imagina formatar o teu PC. É isso que vamos fazer ao teu metabolismo. Vamos mudar a fonte de energia do teu corpo de "açúcar" para "gordura armazenada".</p>
+                <div style="border-left: 2px solid var(--neon); padding-left: 20px; margin-top: 30px;">
+                    <h3 class="text-white" style="font-size: 1.5rem;">O Método 3X:</h3>
+                    <br>
+                    <p><strong class="text-neon">1. Feast & Fast:</strong> Come até ficares cheio. Janelas estratégicas de alimentação.</p>
+                    <p><strong class="text-neon">2. Treino Mínimo Eficaz:</strong> 3 treinos de 25 min por semana. Intensidade > Duração.</p>
+                    <p><strong class="text-neon">3. Sono Anabólico:</strong> Hackeia o teu sono para queimar gordura enquanto dormes.</p>
+                </div>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <div style="background: #000; padding: 30px; border: 1px solid #333; position: relative;">
+                    <div style="position: absolute; top: -10px; left: -10px; width: 50px; height: 50px; border-top: 2px solid var(--neon); border-left: 2px solid var(--neon);"></div>
+                    <h3 style="text-align: center; margin-bottom: 20px;">Eficiência Metabólica</h3>
+                    <div style="height: 10px; background: #333; border-radius: 5px; margin-bottom: 10px;">
+                        <div style="width: 20%; height: 100%; background: #555; border-radius: 5px;"></div>
+                    </div>
+                    <p style="text-align: right; font-size: 0.8rem; margin-bottom: 20px;">Dieta Comum (Lento)</p>
+                    
+                    <div style="height: 10px; background: #333; border-radius: 5px; margin-bottom: 10px;">
+                        <div style="width: 95%; height: 100%; background: var(--neon); border-radius: 5px; box-shadow: 0 0 10px var(--neon);"></div>
+                    </div>
+                    <p style="text-align: right; font-size: 0.8rem; color: var(--neon);">Protocolo Zero (Turbo)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="text-center">Não acredites em mim.<br>Olha para os <span class="text-neon">Prints.</span></h2>
+            <p class="text-center" style="margin-bottom: 40px;">Sem vídeos ensaiados. Apenas mensagens reais de alunos que aplicaram o sistema.</p>
+            
+            <div class="chat-container">
+                <div class="chat-bubble">
+                    <div class="chat-meta"><span class="chat-name">Tiago M.</span> <span>Há 2 horas</span></div>
+                    <p style="color: #ddd; margin: 0;">Mano, tive de ir comprar cinto novo. As calças de fato que não me serviam há 3 anos entraram na boa hoje de manhã. Surreal.</p>
+                </div>
+                <div class="chat-bubble">
+                    <div class="chat-meta"><span class="chat-name">Ana R.</span> <span>Ontem</span></div>
+                    <p style="color: #ddd; margin: 0;">O que mais me choca não é o peso (já foram 6kg), é a energia. Deixei de ter sono depois do almoço. Sinto-me uma máquina.</p>
+                </div>
+                <div class="chat-bubble">
+                    <div class="chat-meta"><span class="chat-name">Pedro S.</span> <span>Hoje</span></div>
+                    <p style="color: #ddd; margin: 0;">Fiz o treino do Módulo 2 e quase morri 😂 mas é incrível como em 20 mins fico mais suado que numa hora de ginásio. Top!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--surface);">
+        <div class="container">
+            <h2>O Arsenal (Módulos)</h2>
+            <div style="margin-top: 30px;">
+                <div class="module">
+                    <div>
+                        <h3 class="text-white">Módulo 01: O Reset</h3>
+                        <p style="margin:0; font-size: 0.9rem;">Limpar a inflamação e preparar o terreno.</p>
+                    </div>
+                    <span class="text-neon">DESBLOQUEADO</span>
+                </div>
+                <div class="module">
+                    <div>
+                        <h3 class="text-white">Módulo 02: Nutrição Tática</h3>
+                        <p style="margin:0; font-size: 0.9rem;">O que comer, quando comer, e como fazer "cheat days" sem estragar tudo.</p>
+                    </div>
+                    <span class="text-neon">DESBLOQUEADO</span>
+                </div>
+                <div class="module">
+                    <div>
+                        <h3 class="text-white">Módulo 03: Treino Híbrido</h3>
+                        <p style="margin:0; font-size: 0.9rem;">A biblioteca de exercícios para fazer em casa ou no gym.</p>
+                    </div>
+                    <span class="text-neon">DESBLOQUEADO</span>
+                </div>
+                <div class="module" style="background: rgba(204, 255, 0, 0.05); border-color: var(--neon);">
+                    <div>
+                        <h3 class="text-neon">Bónus VIP: O Grupo</h3>
+                        <p style="margin:0; font-size: 0.9rem;">Acesso ao nosso Discord/WhatsApp privado.</p>
+                    </div>
+                    <span style="font-weight: bold; color: #fff;">GRÁTIS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="versus-grid">
+                <div>
+                    <h3 style="color: var(--danger);">❌ NÃO COMPRES SE:</h3>
+                    <ul class="list-cross" style="margin-top: 20px;">
+                        <li>Queres uma pílula mágica sem esforço.</li>
+                        <li>Gostas de te fazer de vítima e dar desculpas.</li>
+                        <li>Não estás disposto a seguir instruções simples.</li>
+                        <li>Preferes continuar a reclamar do espelho.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-neon">✅ ISTO É PARA TI SE:</h3>
+                    <ul class="list-check" style="margin-top: 20px;">
+                        <li>Estás farto de "tentar" e queres CONSEGUIR.</li>
+                        <li>Queres um método lógico, baseado em biologia.</li>
+                        <li>Valorizas o teu tempo (treinos curtos).</li>
+                        <li>Queres voltar a ter confiança para tirar a t-shirt.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="oferta" style="padding: 100px 0;">
+        <div class="container">
+            <div class="price-box">
+                <div class="badge">OFERTA LIMITADA</div>
+                <h2>Entra no Protocolo</h2>
+                <p>O valor real disto é a tua saúde mental e física de volta. Mas hoje custa menos que um jantar fora.</p>
+                
+                <div style="margin: 40px 0;">
+                    <p class="strike">Preço Normal: €197,00</p>
+                    <h1 class="text-neon" style="font-size: 4rem;">€67,00</h1>
+                    <p style="font-size: 0.9rem; margin-top: -10px;">Pagamento único. Acesso vitalício.</p>
+                </div>
+
+                <a href="#" class="btn" style="width: 100%; font-size: 1.2rem;">QUERO O ACESSO IMEDIATO 🚀</a>
+                
+                <div style="margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <span style="font-size: 2rem;">🛡️</span>
+                    <div style="text-align: left;">
+                        <strong style="color: #fff;">Garantia Blindada de 30 Dias</strong>
+                        <p style="font-size: 0.8rem; margin: 0;">Não tiveste resultados? Devolvo 100% do dinheiro. Sem perguntas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Protocolo Zero &copy; 2024. Todos os direitos reservados.</p>
+            <p style="font-size: 0.7rem; color: #333;">Este site não faz parte do site do Facebook ou da Facebook Inc.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
